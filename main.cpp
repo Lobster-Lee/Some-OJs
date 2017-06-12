@@ -1,44 +1,69 @@
 #include <iostream>
+#include <string>
 using namespace :: std;
 
 int main()
 {
     int n;
-    cin >> n;
+    string str[30];
+    str[0] = "1";
+    str[1] = "11";
+    int count;
+    char temChar;
+
     if(n == 1)
     {
-        cout << "true" << endl;
+        cout << str[0] << endl;
+        return 0;
+    }
+    if(n == 2)
+    {
+        cout << str[1] << endl;
         return 0;
     }
     
-    int A[n];
-    for(int i = 0; i < n; i++)
-        cin >> A[i];
     
-    if(n == 2)
+    for(int i = 2; i < 30; i++)
     {
-        if(A[0] > 0)
+        for(int j = 0; j < str[i-1].length(); j++)
         {
-            cout << "true" << endl;
-            return 0;
-        }
-        if(A[0] == 0)
-        {
-            cout << "flase" << endl;
-            return 0;
+            if(j == 0)
+            {
+                count = 1;
+                temChar = str[i-1].at(0);
+            }
+            else 
+            {
+                if(str[i-1].at(j) == str[i-1].at(j-1))
+                {
+                    count++;
+                }
+                else
+                {
+                    str[i].push_back((char)(int('0') + count));
+                    str[i].push_back(str[i-1].at(j-1));
+                    
+                    temChar = str[i-1].at(j);
+                    count = 1;
+                }
+                
+                if(j == str[i-1].length()-1)
+                {
+                    if(str[i-1].at(j-1) == str[i-1].at(j))
+                    {
+                        str[i].push_back((char)(int('0') + count));
+                        str[i].push_back(temChar);
+                    }
+                    else
+                    {
+                        str[i].push_back('1');
+                        str[i].push_back(temChar);
+                    }
+                }
+            }
         }
     }
-    
-    int max;
-    for(int i = 0; i < n; i++)
-		{
-			if(i > max)
-	        {
-	            cout << "false" << endl;
-	            return 0;
-	        }
-	        if(i+A[i] > max)
-	            max = i+A[i];
-		}
-		cout << "true" << endl;
+
+    while(cin >> n)
+        cout << str[n-1] << endl;
 }
